@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiệp Cưới - Save the Date</title>
+  <style>
+    :root {
+      --bg: #cfded9;
+      --ink: #3c3c3c;
+      --accent: #6c8f7d;
+      --gold: #c9a24b;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: "Times New Roman", Times, serif;
+      background: #111;
+    }
+
+    .stage {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      max-width: 430px;
+      margin: 0 auto;
+      overflow: hidden;
+      background: linear-gradient(180deg, #e7f1ed, #c9dbd4);
+      perspective: 1200px;
+    }
+
+    .bg {
+      position: absolute; inset: 0;
+      background: url("MRT09814.jpg") center/cover no-repeat;
+      filter: brightness(1.12) contrast(1.18) saturate(1.25) drop-shadow(0 0 18px rgba(255,255,255,.35));
+      transform: scale(1);
+      animation: slowZoom 12s ease-in-out infinite alternate, slideshow 12s infinite;
+    }
+
+    @keyframes slideshow {
+      0%   { background-image: url("MRT09814.jpg"); }
+      33%  { background-image: url("C1（11）.jpg"); }
+      66%  { background-image: url("MRT09992.jpg"); }
+      100% { background-image: url("MRT09814.jpg"); }
+    }
+
+    @keyframes slowZoom {
+      from { transform: scale(1); }
+      to   { transform: scale(1.08); }
+    }
+
+    .veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.85));
+    }
+
+    .screens {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      padding: 24px 16px 36px;
+    }
+
+    .screen { display: none; }
+    .screen.active { display: grid; place-items: center; }
+
+    .card {
+      position: relative;
+      width: 100%; max-width: 360px;
+      padding: 28px 22px 34px;
+      border-radius: 999px;
+      background: radial-gradient(120% 120% at 50% 10%, #ffffff, #f4f8f6);
+      box-shadow: 0 18px 40px rgba(0,0,0,.12);
+      text-align: center;
+      color: var(--ink);
+      animation: cardIn 0.9s ease forwards;
+    }
+
+    @keyframes cardIn { from { opacity: 0; transform: translateY(10px) scale(.98);} to { opacity: 1; transform: none; } }
+
+    .topline { letter-spacing: .22em; font-size: 12px; color: var(--accent); margin-bottom: 6px; text-transform: uppercase; }
+    .headline { font-size: 18px; letter-spacing: .18em; color: var(--gold); margin: 4px 0 10px; text-transform: uppercase; }
+    .script { font-size: 28px; font-weight: 500; color: #2f6f5b; margin: 6px 0 2px; }
+    .amp { font-size: 18px; color: #6c8f7d; margin: 4px 0; }
+    .sub { font-size: 13px; letter-spacing: .08em; color: #6c8f7d; margin: 8px 0 10px; }
+    .date { font-size: 15px; letter-spacing: .18em; color: #b45b3f; margin: 10px 0 2px; text-transform: uppercase; }
+    .time { font-size: 14px; color: #2f6f5b; margin: 6px 0; }
+    .place { font-size: 12px; letter-spacing: .06em; color: #5f6f69; margin-top: 6px; }
+
+    .dove { position: absolute; top: -28px; left: 50%; transform: translateX(-50%); font-size: 44px; color: #e6b64c; animation: float 3s ease-in-out infinite alternate; }
+    @keyframes float { from { transform: translate(-50%, 0); } to { transform: translate(-50%, -6px); } }
+
+    .btn {
+      margin-top: 14px;
+      background: #ffffffcc; border: 1px solid #dfe9e5; color: #2f6f5b;
+      padding: 8px 14px; border-radius: 999px; cursor: pointer; font-size: 12px;
+      backdrop-filter: blur(4px);
+    }
+
+    .input {
+      width: 100%; max-width: 260px; margin: 10px auto 0;
+      padding: 10px 14px; border-radius: 999px; border: 1px solid #dfe9e5;
+      text-align: center; font-family: inherit; font-size: 14px; outline: none;
+    }
+
+    .watermark { position: absolute; right: 10px; bottom: 10px; font-size: 13px; color: rgba(0,0,0,.55); font-weight: 600; }
+    .love { display: inline-flex; align-items: center; gap: 6px; }
+    .heart {
+      width: 14px; height: 14px; background: #e25555; position: relative; transform: rotate(-45deg);
+      animation: beat 1s infinite;
+      filter: drop-shadow(0 0 6px rgba(226,85,85,.8));
+    }
+    .heart::before, .heart::after {
+      content: ""; width: 14px; height: 14px; background: #e25555; border-radius: 50%; position: absolute;
+    }
+    .heart::before { top: -7px; left: 0; }
+    .heart::after { left: 7px; top: 0; }
+    @keyframes beat { 0%, 100% { transform: rotate(-45deg) scale(1); } 50% { transform: rotate(-45deg) scale(1.25); } }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="bg"></div>
+    <div class="veil"></div>
+
+    <div class="screens">
+      <div class="screen active" id="screen-guest">
+        <div class="card">
+          <div class="dove">🕊️</div>
+          <div class="headline">Kính mời</div>
+          <div class="sub">Vui lòng nhập tên của bạn</div>
+          <input class="input" id="guestName" placeholder="Ví dụ: Anh Tuấn" />
+        </div>
+      </div>
+
+      <div class="screen" id="screen-start">
+        <div class="card">
+          <div class="topline">We are wedding</div>
+          <div class="headline">Trân trọng kính mời</div>
+          <div class="script" id="guestShow">Bạn</div>
+          <div class="sub">Đến tham dự hôn lễ của</div>
+          <button class="btn" id="btnToMiddle">Tiếp tục</button>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-middle">
+        <div class="card">
+          <div class="script">Nguyễn Thanh Duy</div>
+          <div class="amp">&amp;</div>
+          <div class="script">Đặng Thị Thanh Tuyền</div>
+          <div class="sub">Hôn lễ được tổ chức lúc</div>
+          <div class="date">19:00 | Thứ Bảy</div>
+          <div class="time">Ngày 31 tháng 01 năm 2026</div>
+          <button class="btn" id="btnToEnd">Xem chi tiết</button>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-end">
+        <div class="card">
+          <div class="headline">Địa điểm tổ chức</div>
+          <div class="script">Nhà hàng Hương Lúa 9</div>
+          <div class="place">Số 11–17 đường 65, Phường Tân Hưng, TP. Hồ Chí Minh</div>
+          <div class="sub">Liên hệ</div>
+          <div class="place">ĐT: 09xx xxx xxx</div>
+          <button class="btn" id="btnBackToMiddle">Quay lại</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="watermark">
+      <span class="love">Nguyễn Thanh Duy <span class="heart"></span> Đặng Thị Thanh Tuyền</span>
+    </div>
+  </div>
+
+  <!-- Nhạc YouTube chạy từ màn 2 -->
+  <iframe id="ytMusic" width="0" height="0"
+    src="https://www.youtube.com/embed/LG5hQJsO8k0?autoplay=0&mute=1&loop=1&playlist=LG5hQJsO8k0"
+    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+  </iframe>
+
+  <script>
+    const screens = {
+      guest: document.getElementById('screen-guest'),
+      start: document.getElementById('screen-start'),
+      middle: document.getElementById('screen-middle'),
+      end: document.getElementById('screen-end')
+    };
+
+    function show(key) {
+      Object.values(screens).forEach(s => s.classList.remove('active'));
+      screens[key].classList.add('active');
+      if (key === 'start') playMusic();
+    }
+
+    const input = document.getElementById('guestName');
+    const guestShow = document.getElementById('guestShow');
+
+    function handleNameSubmit() {
+      const name = input.value.trim();
+      if (!name) {
+        alert('Vui lòng nhập tên của bạn trước khi tiếp tục!');
+        input.focus();
+        return;
+      }
+      guestShow.textContent = name;
+      show('start');
+    }
+
+    input.addEventListener('change', handleNameSubmit);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleNameSubmit();
+    });
+
+    document.getElementById('btnToMiddle').addEventListener('click', () => show('middle'));
+    document.getElementById('btnToEnd').addEventListener('click', () => show('end'));
+    document.getElementById('btnBackToMiddle').addEventListener('click', () => show('middle'));
+
+    const iframe = document.getElementById('ytMusic');
+    let musicStarted = false;
+
+    function playMusic() {
+      if (musicStarted) return;
+      iframe.src = "https://www.youtube.com/embed/LG5hQJsO8k0?autoplay=1&loop=1&playlist=LG5hQJsO8k0";
+      musicStarted = true;
+    }
+
+    // ===== TESTS =====
+    console.assert(typeof show === 'function', 'show() function missing');
+    console.assert(screens.guest && screens.start && screens.middle && screens.end, 'Screens not properly defined');
+  </script>
+</body>
+</html>
